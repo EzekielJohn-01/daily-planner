@@ -1219,6 +1219,10 @@ body.dark-mode .profile-modal-content {
 /* MOBILE PROFILE FIX */
 
 @media (max-width: 600px) {
+    .profile-wrapper {
+        margin-left: auto;
+    }
+
     .profile-menu {
         position: fixed;
         top: 85px;
