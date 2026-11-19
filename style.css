@@ -48,9 +48,16 @@ button {
     align-items: center;
     margin-bottom: 25px;
     gap: 20px;
+
+    background: #E7ECF8;
+    padding: 25px 28px;
+    border-radius: 16px;
+    border: 1px solid #DCE3F2;
+    box-shadow: 0 4px 12px rgba(78, 96, 143, 0.06);
 }
 
 /* Welcome and title grouped together */
+
 .header > div:first-child {
     display: flex;
     flex-direction: column;
@@ -747,6 +754,11 @@ body.dark-mode {
     color: #EDF0F7;
 }
 
+body.dark-mode .header {
+    background: #252C3D;
+    border-color: #343E55;
+}
+
 body.dark-mode .header h1,
 body.dark-mode .date-section h2,
 body.dark-mode .section-heading h2,
@@ -906,6 +918,8 @@ body.dark-mode .close-modal {
         justify-content: space-between;
         gap: 8px;
         margin-bottom: 15px;
+        padding: 18px 16px;
+        border-radius: 14px;
     }
 
     .header h1 {
