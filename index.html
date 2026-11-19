@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Daily Planner</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- PWA SETTINGS -->
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#6477A8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Daily Planner">
+
+    <style>
+        body {
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+
+        <header class="header">
+            <div>
+                <p class="welcome-text">WELCOME BACK</p>
+                <h1>Daily Planner</h1>
+                <p class="header-subtitle">Organize your day, one task at a time.</p>
+            </div>
+
+            <div class="header-actions">
+                <div class="profile-wrapper">
+                    <button
+                        type="button"
+                        class="profile-circle"
+                        id="profile-toggle"
+                        aria-label="Open profile menu"
+                        aria-expanded="false"
+                    >U</button>
+
+                    <div class="profile-menu" id="profile-menu">
+
+                        <div class="profile-menu-header">
+                            <div class="profile-menu-avatar" id="profile-menu-avatar">U</div>
+
+                            <div class="profile-account-info">
+                                <strong>My Account</strong>
+                                <span id="profile-email">Loading...</span>
+                            </div>
+                        </div>
+
+                        <div class="profile-menu-divider"></div>
+
+                        <button type="button" class="profile-menu-item" id="my-profile-button">
+                            👤 My Profile
+                        </button>
+
+                        <button type="button" class="profile-menu-item" id="enable-notifications">
+                            🔔 Enable Notifications
+                        </button>
+
+                        <button type="button" class="profile-menu-item" id="theme-toggle">
+                            🌙 Dark Mode
+                        </button>
+
+                        <button type="button" class="profile-menu-item" id="change-password-button">
+                            🔐 Change Password
+                        </button>
+
+                        <button type="button" class="profile-menu-item" id="about-app-button">
+                            ℹ️ About App
+                        </button>
+
+                        <div class="profile-menu-divider"></div>
+
+                        <button type="button" class="profile-menu-item logout-item" id="logout-button">
+                            🚪 Logout
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <p id="notification-status" class="notification-status">
+            Notifications are not enabled.
+        </p>
+
+        <section class="date-section">
+            <p id="current-date"></p>
+            <h2>Make today productive!</h2>
+            <p>Plan your tasks and achieve your goals.</p>
+        </section>
+
+        <!-- SUMMARY CARDS -->
+        <section class="summary-container">
+            <div class="summary-card">
+                <p>Total Tasks</p>
+                <h2 id="total-tasks">0</h2>
+            </div>
+
+            <div class="summary-card">
+                <p>Completed</p>
+                <h2 id="completed-tasks">0</h2>
+            </div>
+
+            <div class="summary-card">
+                <p>Pending</p>
+                <h2 id="pending-tasks">0</h2>
+            </div>
+        </section>
+
+        <!-- TASK PROGRESS TRACKER -->
+        <section class="progress-section">
+            <div class="progress-heading">
+                <div>
+                    <h2>Task Progress</h2>
+                    <p>Track your daily productivity.</p>
+                </div>
+
+                <h2 id="progress-percentage">0%</h2>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+
+            <p class="progress-count" id="progress-count">
+                0 out of 0 tasks completed
+            </p>
+        </section>
+
+        <!-- CALENDAR -->
+        <section class="calendar-section">
+            <div class="section-heading">
+                <div>
+                    <h2>Calendar</h2>
+                    <p>Check your scheduled tasks.</p>
+                </div>
+            </div>
+
+            <div class="calendar-header">
+                <button id="prev-month" type="button">&#10094;</button>
+                <h3 id="calendar-month"></h3>
+                <button id="next-month" type="button">&#10095;</button>
+            </div>
+
+            <div class="calendar-grid" id="calendar-grid">
+                <div class="calendar-day-name">Sun</div>
+                <div class="calendar-day-name">Mon</div>
+                <div class="calendar-day-name">Tue</div>
+                <div class="calendar-day-name">Wed</div>
+                <div class="calendar-day-name">Thu</div>
+                <div class="calendar-day-name">Fri</div>
+                <div class="calendar-day-name">Sat</div>
+            </div>
+
+            <div class="selected-date-info" id="selected-date-info">
+                Select a date to view its tasks.
+            </div>
+        </section>
+
+        <!-- MY TASKS -->
+        <section class="task-section">
+            <div class="section-heading">
+                <div>
+                    <h2>My Tasks</h2>
+                    <p>Keep track of your daily activities.</p>
+                </div>
+
+                <button class="add-task-btn" id="add-task-btn">
+                    + Add Task
+                </button>
+            </div>
+
+            <!-- SEARCH BAR -->
+            <div class="search-container">
+                <span>🔍</span>
+                <input
+                    type="text"
+                    id="search-task"
+                    placeholder="Search your tasks..."
+                >
+            </div>
+
+            <!-- SORT TASKS -->
+            <div class="sort-container">
+                <label for="sort-tasks">Sort by:</label>
+
+                <select id="sort-tasks">
+                    <option value="default">Default Order</option>
+                    <option value="high">High Priority First</option>
+                    <option value="medium">Medium Priority First</option>
+                    <option value="low">Low Priority First</option>
+                    <option value="date">Due Date (Earliest First)</option>
+                </select>
+            </div>
+
+            <!-- CATEGORY FILTER -->
+            <div class="category-filter-container">
+                <label for="filter-category">Filter by Category:</label>
+
+                <select id="filter-category">
+                    <option value="all">All Categories</option>
+                    <option value="School">📚 School</option>
+                    <option value="Personal">👤 Personal</option>
+                    <option value="Work">💼 Work</option>
+                    <option value="Others">📌 Others</option>
+                </select>
+            </div>
+
+            <!-- TASK FILTERS -->
+            <div class="filter-container">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="pending">Pending</button>
+                <button class="filter-btn" data-filter="completed">Completed</button>
+            </div>
+
+            <div id="task-list" class="task-list"></div>
+        </section>
+
+    </div>
+
+    <!-- ADD / EDIT TASK MODAL -->
+    <div class="modal" id="task-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+
+            <h2 id="modal-title">Add New Task</h2>
+            <p class="modal-subtitle">Fill in the details of your task.</p>
+
+            <form id="task-form">
+
+                <label for="task-title">Task Title</label>
+                <input
+                    type="text"
+                    id="task-title"
+                    placeholder="Enter task title"
+                    required
+                >
+
+                <label for="task-description">Description</label>
+                <textarea
+                    id="task-description"
+                    placeholder="Enter task description"
+                ></textarea>
+
+                <label for="task-priority">Priority</label>
+                <select id="task-priority" required>
+                    <option value="High">High</option>
+                    <option value="Medium" selected>Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+
+                <label for="task-category">Task Category</label>
+                <select id="task-category" required>
+                    <option value="School" selected>📚 School</option>
+                    <option value="Personal">👤 Personal</option>
+                    <option value="Work">💼 Work</option>
+                    <option value="Others">📌 Others</option>
+                </select>
+
+                <label for="task-date">Due Date</label>
+                <input type="date" id="task-date" required>
+
+                <label for="task-time">Due Time</label>
+                <input type="time" id="task-time" required>
+
+                <label for="task-reminder">Task Reminder</label>
+                <select id="task-reminder">
+                    <option value="none">No Reminder</option>
+                    <option value="0">At Due Time</option>
+                    <option value="5">5 Minutes Before</option>
+                    <option value="15" selected>15 Minutes Before</option>
+                    <option value="30">30 Minutes Before</option>
+                </select>
+
+                <!-- RECURRING TASK -->
+                <label for="task-repeat">Repeat Task</label>
+                <select id="task-repeat">
+                    <option value="none">Does Not Repeat</option>
+                    <option value="daily">Every Day</option>
+                    <option value="weekly">Every Week</option>
+                    <option value="monthly">Every Month</option>
+                </select>
+
+                <button type="submit" class="save-task-btn">
+                    Save Task
+                </button>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- MY PROFILE MODAL -->
+    <div class="profile-modal" id="profile-modal">
+        <div class="profile-modal-content">
+            <button type="button" class="profile-modal-close" data-close-modal="profile-modal">&times;</button>
+
+            <h2>My Profile</h2>
+            <p class="profile-modal-subtitle">Your account information.</p>
+
+            <div class="profile-detail">
+                <span>Account Email</span>
+                <strong id="modal-profile-email">Loading...</strong>
+            </div>
+
+            <button type="button" class="profile-modal-button" data-close-modal="profile-modal">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- ABOUT APP MODAL -->
+    <div class="profile-modal" id="about-modal">
+        <div class="profile-modal-content">
+            <button type="button" class="profile-modal-close" data-close-modal="about-modal">&times;</button>
+
+            <h2>About Daily Planner</h2>
+            <p class="profile-modal-subtitle">
+                Organize your day, one task at a time.
+            </p>
+
+            <p class="about-app-description">
+                Daily Planner is a simple productivity application that helps users
+                organize their tasks, manage schedules, set reminders, and monitor
+                their daily progress.
+            </p>
+
+            <p class="about-app-version">Version 1.0</p>
+
+            <button type="button" class="profile-modal-button" data-close-modal="about-modal">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- DAILY PLANNER JAVASCRIPT -->
+    <script src="script.js"></script>
+
+    <!-- PWA REGISTRATION -->
+    <script src="pwa.js"></script>
+
+    <!-- FIREBASE AUTHENTICATION -->
+    <script type="module" src="auth-guard.js"></script>
+
+</body>
+</html>
