@@ -1,3 +1,4 @@
+
 :root {
     --primary: #6477A8;
     --primary-dark: #4E608F;
@@ -990,9 +991,7 @@ button:active {
     }
 }
 
-/* ============================= */
 /* PROFILE DROPDOWN */
-/* ============================= */
 
 .profile-wrapper {
     position: relative;
@@ -1102,9 +1101,7 @@ button:active {
     color: var(--red);
 }
 
-/* ============================= */
 /* PROFILE MODALS */
-/* ============================= */
 
 .profile-modal {
     display: none;
@@ -1203,7 +1200,7 @@ button:active {
     background: var(--primary-dark);
 }
 
-/* DARK MODE */
+/* DARK MODE PROFILE */
 
 body.dark-mode .profile-menu {
     background: var(--white);
@@ -1219,24 +1216,26 @@ body.dark-mode .profile-modal-content {
     color: var(--text);
 }
 
-/* MOBILE */
+/* MOBILE PROFILE FIX */
 
 @media (max-width: 600px) {
     .profile-menu {
-        right: 0;
-        width: min(260px, calc(100vw - 35px));
+        position: fixed;
+        top: 85px;
+        right: 12px;
+        left: auto;
+        width: min(280px, calc(100vw - 24px));
+        max-width: calc(100vw - 24px);
+        max-height: calc(100vh - 105px);
+        overflow-y: auto;
+        z-index: 3000;
     }
 
-    /* HIDE NOTIFICATION STATUS MESSAGE */
-#notification-status {
-    display: none !important;
-}
-
-#notification-status,
-.notification-message,
-.notification-alert,
-.toast,
-.toast-message {
-    display: none !important;
-}
+    #notification-status,
+    .notification-message,
+    .notification-alert,
+    .toast,
+    .toast-message {
+        display: none !important;
+    }
 }
