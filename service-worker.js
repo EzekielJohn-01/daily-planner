@@ -1,10 +1,14 @@
 
-const CACHE_NAME = "daily-planner-v1";
+const CACHE_NAME = "daily-planner-v3";
 
 const FILES_TO_CACHE = [
     "./",
     "./index.html",
     "./login.html",
+    "./login.css",
+    "./login.js",
+    "./signup.html",
+    "./signup.js",
     "./style.css",
     "./script.js",
     "./firebase.js",
