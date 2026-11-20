@@ -468,6 +468,81 @@
 
     </div>
 
+    <!-- LOGOUT CONFIRMATION MODAL -->
+    <div class="profile-modal" id="logout-confirm-modal">
+
+        <div class="profile-modal-content confirmation-modal">
+
+            <h2>Confirm Logout</h2>
+
+            <p class="profile-modal-subtitle">
+                Are you sure you want to log out?
+            </p>
+
+            <div class="confirmation-buttons">
+
+                <button
+                    type="button"
+                    class="confirmation-cancel"
+                    data-close-modal="logout-confirm-modal"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="confirmation-action"
+                    id="confirm-logout-button"
+                >
+                    Log Out
+                </button>
+
+            </div>
+
+            <p class="confirmation-status" id="logout-status"></p>
+
+        </div>
+
+    </div>
+
+    <!-- CHANGE PASSWORD CONFIRMATION MODAL -->
+    <div class="profile-modal" id="password-confirm-modal">
+
+        <div class="profile-modal-content confirmation-modal">
+
+            <h2>Change Password</h2>
+
+            <p class="profile-modal-subtitle">
+                Send a password reset link to
+                <strong id="password-confirm-email"></strong>?
+            </p>
+
+            <div class="confirmation-buttons">
+
+                <button
+                    type="button"
+                    class="confirmation-cancel"
+                    data-close-modal="password-confirm-modal"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    class="confirmation-action"
+                    id="confirm-password-button"
+                >
+                    Send Link
+                </button>
+
+            </div>
+
+            <p class="confirmation-status" id="password-status"></p>
+
+        </div>
+
+    </div>
+
     <!-- DAILY PLANNER JAVASCRIPT -->
     <script src="script.js"></script>
 
