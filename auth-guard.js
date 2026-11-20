@@ -1,3 +1,4 @@
+
 import { auth } from "./firebase.js";
 
 import {
@@ -18,13 +19,41 @@ const myProfileButton = document.getElementById("my-profile-button");
 const changePasswordButton = document.getElementById("change-password-button");
 const aboutAppButton = document.getElementById("about-app-button");
 
-// MODAL ELEMENTS
+// EXISTING MODALS
 const profileModal = document.getElementById("profile-modal");
 const aboutModal = document.getElementById("about-modal");
 const modalProfileEmail = document.getElementById("modal-profile-email");
 
+// CONFIRMATION MODALS
+const logoutConfirmModal = document.getElementById("logout-confirm-modal");
+const passwordConfirmModal = document.getElementById("password-confirm-modal");
+
+const confirmLogoutButton = document.getElementById("confirm-logout-button");
+const confirmPasswordButton = document.getElementById("confirm-password-button");
+
+const passwordConfirmEmail = document.getElementById("password-confirm-email");
+
+const logoutStatus = document.getElementById("logout-status");
+const passwordStatus = document.getElementById("password-status");
+
 // CURRENT USER
 let currentUser = null;
+
+// HELPER FUNCTIONS
+function closeProfileMenu() {
+    profileMenu.classList.remove("show");
+    profileToggle.setAttribute("aria-expanded", "false");
+}
+
+function showStatus(element, message, type) {
+    element.textContent = message;
+    element.className = `confirmation-status show ${type}`;
+}
+
+function resetStatus(element) {
+    element.textContent = "";
+    element.className = "confirmation-status";
+}
 
 // AUTHENTICATION CHECK
 onAuthStateChanged(auth, user => {
@@ -60,16 +89,14 @@ document.addEventListener("click", event => {
         !profileMenu.contains(event.target) &&
         !profileToggle.contains(event.target)
     ) {
-        profileMenu.classList.remove("show");
-        profileToggle.setAttribute("aria-expanded", "false");
+        closeProfileMenu();
     }
 });
 
 // CLOSE DROPDOWN AND MODALS WITH ESCAPE
 document.addEventListener("keydown", event => {
     if (event.key === "Escape") {
-        profileMenu.classList.remove("show");
-        profileToggle.setAttribute("aria-expanded", "false");
+        closeProfileMenu();
 
         document.querySelectorAll(".profile-modal.show").forEach(modal => {
             modal.classList.remove("show");
@@ -85,44 +112,105 @@ myProfileButton.addEventListener("click", () => {
         currentUser.email || "No email available";
 
     profileModal.classList.add("show");
-
-    profileMenu.classList.remove("show");
-    profileToggle.setAttribute("aria-expanded", "false");
+    closeProfileMenu();
 });
 
 // OPEN ABOUT APP
 aboutAppButton.addEventListener("click", () => {
     aboutModal.classList.add("show");
-
-    profileMenu.classList.remove("show");
-    profileToggle.setAttribute("aria-expanded", "false");
+    closeProfileMenu();
 });
 
-// CHANGE PASSWORD
-changePasswordButton.addEventListener("click", async () => {
+// OPEN CHANGE PASSWORD CONFIRMATION
+changePasswordButton.addEventListener("click", () => {
     if (!currentUser || !currentUser.email) {
-        alert("Unable to find your account email.");
         return;
     }
 
-    const confirmReset = confirm(
-        "Send a password reset link to " + currentUser.email + "?"
-    );
+    resetStatus(passwordStatus);
 
-    if (!confirmReset) return;
+    confirmPasswordButton.disabled = false;
+    confirmPasswordButton.textContent = "Send Link";
+
+    passwordConfirmEmail.textContent = currentUser.email;
+
+    passwordConfirmModal.classList.add("show");
+
+    closeProfileMenu();
+});
+
+// CONFIRM CHANGE PASSWORD
+confirmPasswordButton.addEventListener("click", async () => {
+    if (!currentUser || !currentUser.email) {
+        showStatus(
+            passwordStatus,
+            "Unable to find your account email.",
+            "error"
+        );
+        return;
+    }
 
     try {
+        confirmPasswordButton.disabled = true;
+        confirmPasswordButton.textContent = "Sending...";
+
         await sendPasswordResetEmail(auth, currentUser.email);
 
-        alert("Password reset email sent! Please check your inbox.");
+        showStatus(
+            passwordStatus,
+            "Password reset email sent! Please check your inbox.",
+            "success"
+        );
 
-        profileMenu.classList.remove("show");
-        profileToggle.setAttribute("aria-expanded", "false");
+        confirmPasswordButton.textContent = "Sent";
 
     } catch (error) {
         console.error("Password reset error:", error);
 
-        alert("Unable to send password reset email. Please try again.");
+        showStatus(
+            passwordStatus,
+            "Unable to send password reset email. Please try again.",
+            "error"
+        );
+
+        confirmPasswordButton.disabled = false;
+        confirmPasswordButton.textContent = "Send Link";
+    }
+});
+
+// OPEN LOGOUT CONFIRMATION
+logoutButton.addEventListener("click", () => {
+    resetStatus(logoutStatus);
+
+    confirmLogoutButton.disabled = false;
+    confirmLogoutButton.textContent = "Log Out";
+
+    logoutConfirmModal.classList.add("show");
+
+    closeProfileMenu();
+});
+
+// CONFIRM LOGOUT
+confirmLogoutButton.addEventListener("click", async () => {
+    try {
+        confirmLogoutButton.disabled = true;
+        confirmLogoutButton.textContent = "Logging out...";
+
+        await signOut(auth);
+
+        window.location.replace("login.html");
+
+    } catch (error) {
+        console.error("Logout error:", error);
+
+        showStatus(
+            logoutStatus,
+            "Unable to log out. Please try again.",
+            "error"
+        );
+
+        confirmLogoutButton.disabled = false;
+        confirmLogoutButton.textContent = "Log Out";
     }
 });
 
@@ -142,24 +230,4 @@ document.querySelectorAll(".profile-modal").forEach(modal => {
             modal.classList.remove("show");
         }
     });
-});
-
-// LOGOUT
-logoutButton.addEventListener("click", async () => {
-    const confirmLogout = confirm(
-        "Are you sure you want to log out?"
-    );
-
-    if (!confirmLogout) return;
-
-    try {
-        await signOut(auth);
-
-        window.location.replace("login.html");
-
-    } catch (error) {
-        console.error("Logout error:", error);
-
-        alert("Unable to log out. Please try again.");
-    }
 });
