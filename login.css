@@ -8,11 +8,15 @@
 :root {
     --primary: #6477A8;
     --primary-dark: #4E608F;
-    --background: #F3F5FA;
+    --background: #E8EAF4;
+    --card: #E1E5F1;
+    --input: #F0F2F8;
+    --button: #8580A8;
+    --button-hover: #716B94;
     --white: #FFFFFF;
     --text: #252B3A;
     --muted: #8991A5;
-    --border: #E8EAF1;
+    --border: #D1D8E8;
     --red: #CF5555;
 }
 
@@ -22,11 +26,12 @@
 
 body {
     font-family: Arial, sans-serif;
-    background:
-        radial-gradient(circle at 10% 15%, rgba(180, 195, 235, 0.35), transparent 28%),
-        radial-gradient(circle at 90% 45%, rgba(204, 195, 235, 0.30), transparent 30%),
-        radial-gradient(circle at 20% 90%, rgba(190, 210, 240, 0.30), transparent 28%),
-        linear-gradient(135deg, #F5F7FD 0%, #EAEFFD 50%, #F3F1FA 100%);
+    background: linear-gradient(
+        135deg,
+        #F0F1F8 0%,
+        #E8EAF4 50%,
+        #E1E5F1 100%
+    );
     background-attachment: fixed;
     min-height: 100vh;
     display: flex;
@@ -42,11 +47,11 @@ body {
 }
 
 .login-card {
-    background: var(--white);
+    background: var(--card);
     padding: 42px 38px;
     border-radius: 22px;
     box-shadow: 0 15px 45px rgba(56, 72, 110, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.9);
+    border: 1px solid #D5DAE9;
     text-align: center;
     transition: 0.3s ease;
 }
@@ -62,8 +67,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #E9EDF7;
-    border: 1px solid #DFE5F2;
+    background: #D5DBEB;
+    border: 1px solid #C8D0E3;
     border-radius: 21px;
     font-size: 32px;
     box-shadow: 0 5px 15px rgba(100, 119, 168, 0.08);
@@ -116,7 +121,7 @@ h2 {
     outline: none;
     font-size: 14px;
     color: var(--text);
-    background: #FAFBFD;
+    background: var(--input);
     transition: 0.25s ease;
 }
 
@@ -126,7 +131,7 @@ h2 {
 
 .form-group input:focus {
     border-color: var(--primary);
-    background: #FFFFFF;
+    background: var(--input);
     box-shadow: 0 0 0 4px rgba(100, 119, 168, 0.12);
 }
 
@@ -176,11 +181,13 @@ h2 {
     color: var(--primary-dark);
 }
 
+/* LOGIN BUTTON */
+
 #login-button {
     width: 100%;
     padding: 15px;
     margin-top: 9px;
-    background: linear-gradient(135deg, #7185B8, #526795);
+    background: var(--button);
     color: white;
     border: none;
     border-radius: 10px;
@@ -188,13 +195,13 @@ h2 {
     font-weight: bold;
     cursor: pointer;
     transition: 0.25s ease;
-    box-shadow: 0 5px 13px rgba(78, 96, 143, 0.16);
+    box-shadow: 0 5px 13px rgba(113, 107, 148, 0.18);
 }
 
 #login-button:hover {
-    background: var(--primary-dark);
+    background: var(--button-hover);
     transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(78, 96, 143, 0.23);
+    box-shadow: 0 8px 18px rgba(113, 107, 148, 0.23);
 }
 
 #login-button:active {
@@ -250,11 +257,12 @@ h2 {
 ========================= */
 
 .signup-page {
-    background:
-        radial-gradient(circle at 10% 15%, rgba(180, 195, 235, 0.35), transparent 28%),
-        radial-gradient(circle at 90% 45%, rgba(204, 195, 235, 0.30), transparent 30%),
-        radial-gradient(circle at 20% 90%, rgba(190, 210, 240, 0.30), transparent 28%),
-        linear-gradient(135deg, #F5F7FD 0%, #EAEFFD 50%, #F3F1FA 100%);
+    background: linear-gradient(
+        135deg,
+        #F0F1F8 0%,
+        #E8EAF4 50%,
+        #E1E5F1 100%
+    );
     background-attachment: fixed;
     padding: 35px 20px;
 }
@@ -266,11 +274,11 @@ h2 {
 }
 
 .signup-card {
-    background: var(--white);
+    background: var(--card);
     padding: 38px 40px;
     border-radius: 22px;
     box-shadow: 0 15px 45px rgba(56, 72, 110, 0.10);
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    border: 1px solid #D5DAE9;
 }
 
 .signup-brand {
@@ -285,7 +293,7 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #E9EDF7;
+    background: #D5DBEB;
     border-radius: 18px;
     font-size: 29px;
 }
@@ -308,7 +316,7 @@ h2 {
 .signup-label {
     display: inline-block;
     color: var(--primary-dark);
-    background: #EEF1F9;
+    background: #D5DBEB;
     padding: 6px 11px;
     border-radius: 20px;
     font-size: 10px;
@@ -341,7 +349,7 @@ h2 {
 .signup-card .form-group input {
     padding: 15px;
     border-radius: 10px;
-    background: #FAFBFD;
+    background: var(--input);
     font-size: 13px;
 }
 
@@ -356,6 +364,8 @@ h2 {
     margin-top: 7px;
 }
 
+/* SIGN UP BUTTON */
+
 .signup-card #signup-button {
     width: 100%;
     display: flex;
@@ -364,7 +374,7 @@ h2 {
     gap: 10px;
     padding: 15px;
     margin-top: 12px;
-    background: var(--primary);
+    background: var(--button);
     color: white;
     border: none;
     border-radius: 10px;
@@ -372,6 +382,7 @@ h2 {
     font-weight: bold;
     cursor: pointer;
     transition: 0.25s ease;
+    box-shadow: 0 5px 13px rgba(113, 107, 148, 0.18);
 }
 
 .signup-card #signup-button span {
@@ -380,8 +391,8 @@ h2 {
 }
 
 .signup-card #signup-button:hover {
-    background: var(--primary-dark);
-    box-shadow: 0 6px 15px rgba(78, 96, 143, 0.20);
+    background: var(--button-hover);
+    box-shadow: 0 8px 18px rgba(113, 107, 148, 0.23);
     transform: translateY(-2px);
 }
 
@@ -458,28 +469,19 @@ h2 {
         font-size: 24px;
     }
 }
+
+/* =========================
+   PAGE ALIGNMENT
+========================= */
+
 html,
 body {
     min-height: 100%;
-    background-color: #F3F5FA !important;
 }
 
-body {
-    background: linear-gradient(
-        135deg,
-        #F5F7FD 0%,
-        #EAEFFD 50%,
-        #F3F1FA 100%
-    ) !important;
-    background-attachment: fixed !important;
-}
-
-body.signup-page {
-    background: linear-gradient(
-        135deg,
-        #F5F7FD 0%,
-        #EAEFFD 50%,
-        #F3F1FA 100%
-    ) !important;
-    background-attachment: fixed !important;
+body:not(.signup-page) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
