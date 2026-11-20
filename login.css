@@ -458,3 +458,28 @@ h2 {
         font-size: 24px;
     }
 }
+html,
+body {
+    min-height: 100%;
+    background-color: #F3F5FA !important;
+}
+
+body {
+    background: linear-gradient(
+        135deg,
+        #F5F7FD 0%,
+        #EAEFFD 50%,
+        #F3F1FA 100%
+    ) !important;
+    background-attachment: fixed !important;
+}
+
+body.signup-page {
+    background: linear-gradient(
+        135deg,
+        #F5F7FD 0%,
+        #EAEFFD 50%,
+        #F3F1FA 100%
+    ) !important;
+    background-attachment: fixed !important;
+}
