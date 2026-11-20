@@ -2065,3 +2065,10 @@ body.dark-mode .task-section > .section-heading p {
         font-size: 20px;
     }
 }
+
+
+/* DISABLE PULL-TO-REFRESH */
+html,
+body {
+    overscroll-behavior-y: none;
+}
