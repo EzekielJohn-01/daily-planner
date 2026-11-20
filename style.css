@@ -19,7 +19,12 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: var(--background);
+    background:
+        radial-gradient(circle at 10% 15%, rgba(180, 195, 235, 0.35), transparent 28%),
+        radial-gradient(circle at 90% 45%, rgba(204, 195, 235, 0.30), transparent 30%),
+        radial-gradient(circle at 20% 90%, rgba(190, 210, 240, 0.30), transparent 28%),
+        linear-gradient(135deg, #F5F7FD 0%, #EAEFFD 50%, #F3F1FA 100%);
+    background-attachment: fixed;
     color: var(--text);
     transition: background 0.3s ease, color 0.3s ease;
 }
