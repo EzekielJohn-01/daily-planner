@@ -2072,3 +2072,20 @@ html,
 body {
     overscroll-behavior-y: none;
 }
+
+/* PREVENT PULL-TO-REFRESH IN INSTALLED APP */
+html {
+    overscroll-behavior: none;
+    overscroll-behavior-y: none;
+}
+
+body {
+    overscroll-behavior: none;
+    overscroll-behavior-y: none;
+    touch-action: pan-x pan-y;
+}
+
+#app,
+.main-content {
+    overscroll-behavior-y: none;
+}
