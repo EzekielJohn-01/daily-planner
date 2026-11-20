@@ -1015,3 +1015,20 @@ displayCalendar();
 
 updateNotificationStatus();
 checkTaskReminders();
+
+
+// DISABLE PULL-TO-REFRESH
+let touchStartY = 0;
+
+document.addEventListener("touchstart", function (event) {
+    touchStartY = event.touches[0].clientY;
+}, { passive: true });
+
+document.addEventListener("touchmove", function (event) {
+    const currentY = event.touches[0].clientY;
+    const scrollTop = document.documentElement.scrollTop;
+
+    if (scrollTop <= 0 && currentY > touchStartY) {
+        event.preventDefault();
+    }
+}, { passive: false });
