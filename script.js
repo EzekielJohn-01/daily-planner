@@ -1,3 +1,4 @@
+
 let tasks = JSON.parse(localStorage.getItem("dailyPlannerTasks")) || [];
 
 let currentFilter = "all";
@@ -597,19 +598,30 @@ function toggleTask(id) {
     displayCalendar();
 }
 
-// DELETE TASK
-function deleteTask(id) {
-    if (!confirm("Are you sure you want to delete this task?")) {
-        return;
-    }
+// DELETE TASK - CUSTOM CONFIRMATION MODAL
+let taskToDelete = null;
 
-    tasks = tasks.filter(task => task.id !== id);
+function deleteTask(id) {
+    taskToDelete = id;
+
+    document.getElementById("delete-confirm-modal").classList.add("show");
+}
+
+// CONFIRM DELETE TASK
+document.getElementById("confirm-delete-button").addEventListener("click", () => {
+    if (!taskToDelete) return;
+
+    tasks = tasks.filter(task => task.id !== taskToDelete);
 
     saveTasks();
     updateSummary();
     displayTasks();
     displayCalendar();
-}
+
+    taskToDelete = null;
+
+    document.getElementById("delete-confirm-modal").classList.remove("show");
+});
 
 // FILTER TASKS
 document.querySelectorAll(".filter-btn").forEach(button => {
@@ -1015,7 +1027,6 @@ displayCalendar();
 
 updateNotificationStatus();
 checkTaskReminders();
-
 
 // DISABLE PULL-TO-REFRESH
 let touchStartY = 0;
