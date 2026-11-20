@@ -2089,3 +2089,97 @@ body {
 .main-content {
     overscroll-behavior-y: none;
 }
+
+
+/* ============================= */
+/* CUSTOM CONFIRMATION DIALOGS   */
+/* ============================= */
+
+.confirmation-modal {
+    max-width: 390px;
+    text-align: center;
+}
+
+.confirmation-modal h2 {
+    margin-bottom: 12px;
+}
+
+.confirmation-modal .profile-modal-subtitle {
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.confirmation-modal .profile-modal-subtitle strong {
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+.confirmation-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.confirmation-buttons button {
+    flex: 1;
+    min-height: 43px;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.confirmation-cancel {
+    background: var(--input);
+    color: var(--text);
+    border: 1px solid var(--border) !important;
+}
+
+.confirmation-action {
+    background: var(--primary);
+    color: #FFFFFF;
+}
+
+.confirmation-buttons button:hover {
+    transform: translateY(-2px);
+    filter: brightness(0.97);
+}
+
+.confirmation-buttons button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.confirmation-status {
+    display: none;
+    margin: 16px 0 0;
+    font-size: 13px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.confirmation-status.show {
+    display: block;
+}
+
+.confirmation-status.success {
+    color: var(--green);
+}
+
+.confirmation-status.error {
+    color: var(--red);
+}
+
+body.dark-mode .confirmation-modal .profile-modal-subtitle strong {
+    color: var(--primary-dark);
+}
+
+body.dark-mode .confirmation-cancel {
+    background: var(--input);
+    color: var(--text);
+    border-color: var(--border) !important;
+}
