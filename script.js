@@ -1,4 +1,3 @@
-
 let tasks = JSON.parse(localStorage.getItem("dailyPlannerTasks")) || [];
 
 let currentFilter = "all";
@@ -54,31 +53,101 @@ function isOverdue(task) {
     return !isNaN(deadline.getTime()) && deadline.getTime() < Date.now();
 }
 
-// UPDATE TASK PROGRESS
-function updateProgress() {
-    const total = tasks.length;
-    const completed = tasks.filter(task => task.completed).length;
 
-    const percentage = total === 0
-        ? 0
-        : Math.round((completed / total) * 100);
+// UPDATE WEEKLY ACTIVITY CHART
+function updateWeeklyActivity() {
+    const totalElement = document.getElementById("weekly-activity-total");
+    const caption = document.getElementById("weekly-chart-caption");
 
-    const progressPercentage = document.getElementById("progress-percentage");
-    const progressFill = document.getElementById("progress-fill");
-    const progressCount = document.getElementById("progress-count");
-
-    if (progressPercentage) {
-        progressPercentage.textContent = `${percentage}%`;
+    if (!totalElement || !caption) {
+        return;
     }
 
-    if (progressFill) {
-        progressFill.style.width = `${percentage}%`;
-    }
+    const today = new Date();
 
-    if (progressCount) {
-        progressCount.textContent =
-            `${completed} out of ${total} ${total === 1 ? "task" : "tasks"} completed`;
-    }
+    // GET MONDAY OF THE CURRENT WEEK
+    const monday = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate()
+    );
+
+    const currentDay = monday.getDay();
+
+    monday.setDate(
+        monday.getDate() + (currentDay === 0 ? -6 : 1 - currentDay)
+    );
+
+    const dailyCounts = Array(7).fill(0);
+
+    // COUNT COMPLETED TASKS BASED ON COMPLETION DATE
+    tasks.forEach(task => {
+        if (!task.completed || !task.completedAt) {
+            return;
+        }
+
+        const completedDate = new Date(task.completedAt);
+
+        if (isNaN(completedDate.getTime())) {
+            return;
+        }
+
+        const completedDay = new Date(
+            completedDate.getFullYear(),
+            completedDate.getMonth(),
+            completedDate.getDate()
+        );
+
+        const difference = Math.round(
+            (completedDay - monday) / (1000 * 60 * 60 * 24)
+        );
+
+        if (difference >= 0 && difference < 7) {
+            dailyCounts[difference]++;
+        }
+    });
+
+    const weeklyTotal = dailyCounts.reduce(
+        (total, count) => total + count,
+        0
+    );
+
+    const highestCount = Math.max(...dailyCounts, 1);
+
+    // UPDATE WEEKLY TOTAL
+    totalElement.textContent = weeklyTotal;
+
+    // UPDATE BAR CHART
+    dailyCounts.forEach((count, index) => {
+        const bar = document.getElementById(`weekly-bar-${index + 1}`);
+        const countElement = document.getElementById(`weekly-count-${index + 1}`);
+
+        if (bar) {
+            const height = count === 0
+                ? 0
+                : (count / highestCount) * 100;
+
+            bar.style.height = `${height}%`;
+        }
+
+        if (countElement) {
+            countElement.textContent = count;
+        }
+    });
+
+    // DISPLAY CURRENT WEEK RANGE
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+
+    const dateOptions = {
+        month: "short",
+        day: "numeric"
+    };
+
+    const startDate = monday.toLocaleDateString("en-US", dateOptions);
+    const endDate = sunday.toLocaleDateString("en-US", dateOptions);
+
+    caption.textContent = `Your activity from ${startDate} to ${endDate}`;
 }
 
 // UPDATE SUMMARY
@@ -91,7 +160,7 @@ function updateSummary() {
     document.getElementById("completed-tasks").textContent = completed;
     document.getElementById("pending-tasks").textContent = pending;
 
-    updateProgress();
+    updateWeeklyActivity();
 }
 
 // GET CATEGORY LABEL
@@ -516,7 +585,10 @@ function toggleTask(id) {
     task.completed = !task.completed;
 
     if (task.completed) {
+        task.completedAt = new Date().toISOString();
         createNextRecurringTask(task);
+    } else {
+        task.completedAt = null;
     }
 
     saveTasks();
@@ -673,17 +745,27 @@ function updateSelectedDateInfo() {
     info.textContent = `${formattedDate} — ${count} ${count === 1 ? "task" : "tasks"} scheduled`;
 }
 
+
 // PREVIOUS MONTH
-document.getElementById("prev-month").addEventListener("click", () => {
-    calendarDate.setMonth(calendarDate.getMonth() - 1);
-    displayCalendar();
-});
+const previousMonthButton = document.getElementById("prev-month");
+
+if (previousMonthButton) {
+    previousMonthButton.addEventListener("click", () => {
+        calendarDate.setMonth(calendarDate.getMonth() - 1);
+        displayCalendar();
+    });
+}
 
 // NEXT MONTH
-document.getElementById("next-month").addEventListener("click", () => {
-    calendarDate.setMonth(calendarDate.getMonth() + 1);
-    displayCalendar();
-});
+const nextMonthButton = document.getElementById("next-month");
+
+if (nextMonthButton) {
+    nextMonthButton.addEventListener("click", () => {
+        calendarDate.setMonth(calendarDate.getMonth() + 1);
+        displayCalendar();
+    });
+}
+
 
 // =====================================
 // NOTIFICATION SETTINGS
@@ -725,77 +807,75 @@ function updateNotificationStatus() {
 }
 
 // ENABLE OR DISABLE NOTIFICATIONS
-notificationButton.addEventListener("click", async () => {
+if (notificationButton) {
+    notificationButton.addEventListener("click", async () => {
 
-    // DISABLE NOTIFICATIONS
-    if (notificationsEnabled) {
-        notificationsEnabled = false;
+        if (notificationsEnabled) {
+            notificationsEnabled = false;
 
-        localStorage.setItem("dailyPlannerNotifications", "false");
-
-        updateNotificationStatus();
-
-        return;
-    }
-
-    // CHECK BROWSER SUPPORT
-    if (!("Notification" in window)) {
-        alert("Your browser does not support notifications.");
-        return;
-    }
-
-    if (!window.isSecureContext) {
-        alert("Please open Daily Planner using HTTPS or localhost.");
-        return;
-    }
-
-    // CHECK IF NOTIFICATIONS ARE BLOCKED
-    if (Notification.permission === "denied") {
-        alert(
-            "Notifications are blocked. Please allow them in your browser settings."
-        );
-
-        updateNotificationStatus();
-        return;
-    }
-
-    try {
-        let permission = Notification.permission;
-
-        // PERMISSION IS REQUESTED ONLY AFTER BUTTON CLICK
-        if (permission === "default") {
-            permission = await Notification.requestPermission();
-        }
-
-        if (permission === "granted") {
-            notificationsEnabled = true;
-
-            localStorage.setItem("dailyPlannerNotifications", "true");
+            localStorage.setItem("dailyPlannerNotifications", "false");
 
             updateNotificationStatus();
 
-            const testNotification = new Notification("Daily Planner", {
-                body: "Notifications have been enabled successfully!"
-            });
-
-            testNotification.onclick = () => {
-                window.focus();
-                testNotification.close();
-            };
-
-            checkTaskReminders();
-
-        } else {
-            alert("Please allow notifications in your browser settings.");
+            return;
         }
 
-    } catch (error) {
-        console.error("Notification error:", error);
-        alert("Unable to enable notifications.");
-    }
+        if (!("Notification" in window)) {
+            alert("Your browser does not support notifications.");
+            return;
+        }
 
-    updateNotificationStatus();
-});
+        if (!window.isSecureContext) {
+            alert("Please open Daily Planner using HTTPS or localhost.");
+            return;
+        }
+
+        if (Notification.permission === "denied") {
+            alert(
+                "Notifications are blocked. Please allow them in your browser settings."
+            );
+
+            updateNotificationStatus();
+            return;
+        }
+
+        try {
+            let permission = Notification.permission;
+
+            if (permission === "default") {
+                permission = await Notification.requestPermission();
+            }
+
+            if (permission === "granted") {
+                notificationsEnabled = true;
+
+                localStorage.setItem("dailyPlannerNotifications", "true");
+
+                updateNotificationStatus();
+
+                const testNotification = new Notification("Daily Planner", {
+                    body: "Notifications have been enabled successfully!"
+                });
+
+                testNotification.onclick = () => {
+                    window.focus();
+                    testNotification.close();
+                };
+
+                checkTaskReminders();
+
+            } else {
+                alert("Please allow notifications in your browser settings.");
+            }
+
+        } catch (error) {
+            console.error("Notification error:", error);
+            alert("Unable to enable notifications.");
+        }
+
+        updateNotificationStatus();
+    });
+}
 
 // SAVE SENT REMINDERS
 function saveSentReminders() {
@@ -933,10 +1013,5 @@ updateSummary();
 displayTasks();
 displayCalendar();
 
-// This only updates the button label.
-// It DOES NOT request browser permission.
 updateNotificationStatus();
-
-// This only checks reminders if the user enabled them.
-// It DOES NOT request browser permission.
 checkTaskReminders();
