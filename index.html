@@ -11,7 +11,7 @@
 
     <!-- PWA SETTINGS -->
     <link rel="manifest" href="./manifest.json">
-    <meta name="theme-color" content="#6477A8">
+    <meta name="theme-color" content="#8580A8">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Daily Planner">
@@ -22,18 +22,23 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="app-container">
 
+        <!-- HEADER -->
         <header class="header">
             <div>
                 <h1>Daily Planner</h1>
-                <p class="header-subtitle">Organize your day, one task at a time.</p>
+                <p class="header-subtitle">
+                    Organize your day, one task at a time.
+                </p>
             </div>
 
             <div class="header-actions">
                 <div class="profile-wrapper">
+
                     <button
                         type="button"
                         class="profile-circle"
@@ -42,10 +47,13 @@
                         aria-expanded="false"
                     >U</button>
 
+                    <!-- PROFILE MENU -->
                     <div class="profile-menu" id="profile-menu">
 
                         <div class="profile-menu-header">
-                            <div class="profile-menu-avatar" id="profile-menu-avatar">U</div>
+                            <div class="profile-menu-avatar" id="profile-menu-avatar">
+                                U
+                            </div>
 
                             <div class="profile-account-info">
                                 <strong>My Account</strong>
@@ -90,6 +98,7 @@
             Notifications are not enabled.
         </p>
 
+        <!-- DATE SECTION -->
         <section class="date-section">
             <p id="current-date"></p>
             <h2>Make today productive!</h2>
@@ -98,6 +107,7 @@
 
         <!-- SUMMARY CARDS -->
         <section class="summary-container">
+
             <div class="summary-card">
                 <p>Total Tasks</p>
                 <h2 id="total-tasks">0</h2>
@@ -112,60 +122,138 @@
                 <p>Pending</p>
                 <h2 id="pending-tasks">0</h2>
             </div>
+
         </section>
 
-        <!-- TASK PROGRESS TRACKER -->
-        <section class="progress-section">
-            <div class="progress-heading">
+        <!-- WEEKLY ACTIVITY CHART -->
+        <section class="weekly-activity-section">
+
+            <div class="weekly-activity-heading">
                 <div>
-                    <h2>Task Progress</h2>
-                    <p>Track your daily productivity.</p>
+                    <h2>Weekly Activity</h2>
+                    <p>Track your completed tasks throughout the week.</p>
                 </div>
 
-                <h2 id="progress-percentage">0%</h2>
+                <div class="weekly-total">
+                    <span id="weekly-activity-total">0</span>
+                    <small>Completed</small>
+                </div>
             </div>
 
-            <div class="progress-bar">
-                <div class="progress-fill" id="progress-fill"></div>
+            <div class="weekly-chart" id="weekly-chart">
+
+                <div class="weekly-chart-day">
+                    <span class="weekly-chart-count" id="weekly-count-1">0</span>
+                    <div class="weekly-chart-track">
+                        <div class="weekly-chart-bar" id="weekly-bar-1"></div>
+                    </div>
+                    <span class="weekly-chart-label">Mon</span>
+                </div>
+
+                <div class="weekly-chart-day">
+                    <span class="weekly-chart-count" id="weekly-count-2">0</span>
+                    <div class="weekly-chart-track">
+                        <div class="weekly-chart-bar" id="weekly-bar-2"></div>
+                    </div>
+                    <span class="weekly-chart-label">Tue</span>
+                </div>
+
+                <div class="weekly-chart-day">
+                    <span class="weekly-chart-count" id="weekly-count-3">0</span>
+                    <div class="weekly-chart-track">
+                        <div class="weekly-chart-bar" id="weekly-bar-3"></div>
+                    </div>
+                    <span class="weekly-chart-label">Wed</span>
+                </div>
+
+                <div class="weekly-chart-day">
+                    <span class="weekly-chart-count" id="weekly-count-4">0</span>
+                    <div class="weekly-chart-track">
+                        <div class="weekly-chart-bar" id="weekly-bar-4"></div>
+                    </div>
+                    <span class="weekly-chart-label">Thu</span>
+                </div>
+
+                <div class="weekly-chart-day">
+                    <span class="weekly-chart-count" id="weekly-count-5">0</span>
+                    <div class="weekly-chart-track">
+                        <div class="weekly-chart-bar" id="weekly-bar-5"></div>
+                    </div>
+                    <span class="weekly-chart-label">Fri</span>
+                </div>
+
+                <div class="weekly-chart-day">
+                    <span class="weekly-chart-count" id="weekly-count-6">0</span>
+                    <div class="weekly-chart-track">
+                        <div class="weekly-chart-bar" id="weekly-bar-6"></div>
+                    </div>
+                    <span class="weekly-chart-label">Sat</span>
+                </div>
+
+                <div class="weekly-chart-day">
+                    <span class="weekly-chart-count" id="weekly-count-7">0</span>
+                    <div class="weekly-chart-track">
+                        <div class="weekly-chart-bar" id="weekly-bar-7"></div>
+                    </div>
+                    <span class="weekly-chart-label">Sun</span>
+                </div>
+
             </div>
 
-            <p class="progress-count" id="progress-count">
-                0 out of 0 tasks completed
+            <p class="weekly-chart-note" id="weekly-chart-caption">
+                Your weekly productivity at a glance.
             </p>
+
         </section>
 
-        <!-- CALENDAR -->
+        <!-- CALENDAR SECTION -->
         <section class="calendar-section">
+
             <div class="section-heading">
                 <div>
                     <h2>Calendar</h2>
-                    <p>Check your scheduled tasks.</p>
+                    <p>View your schedule and upcoming tasks.</p>
                 </div>
             </div>
 
-            <div class="calendar-header">
-                <button id="prev-month" type="button">&#10094;</button>
-                <h3 id="calendar-month"></h3>
-                <button id="next-month" type="button">&#10095;</button>
+            <div class="calendar-container">
+
+                <div class="calendar-header">
+
+                    <button
+                        type="button"
+                        id="prev-month"
+                        class="calendar-nav-btn"
+                    >
+                        &#10094;
+                    </button>
+
+                    <h3 id="calendar-month"></h3>
+
+                    <button
+                        type="button"
+                        id="next-month"
+                        class="calendar-nav-btn"
+                    >
+                        &#10095;
+                    </button>
+
+                </div>
+
+                <!-- WEEKDAYS AND DATES ARE GENERATED BY JAVASCRIPT -->
+                <div class="calendar-grid" id="calendar-grid"></div>
+
             </div>
 
-            <div class="calendar-grid" id="calendar-grid">
-                <div class="calendar-day-name">Sun</div>
-                <div class="calendar-day-name">Mon</div>
-                <div class="calendar-day-name">Tue</div>
-                <div class="calendar-day-name">Wed</div>
-                <div class="calendar-day-name">Thu</div>
-                <div class="calendar-day-name">Fri</div>
-                <div class="calendar-day-name">Sat</div>
-            </div>
-
-            <div class="selected-date-info" id="selected-date-info">
+            <p id="selected-date-info" class="selected-date-info">
                 Select a date to view its tasks.
-            </div>
+            </p>
+
         </section>
 
         <!-- MY TASKS -->
         <section class="task-section">
+
             <div class="section-heading">
                 <div>
                     <h2>My Tasks</h2>
@@ -180,6 +268,7 @@
             <!-- SEARCH BAR -->
             <div class="search-container">
                 <span>🔍</span>
+
                 <input
                     type="text"
                     id="search-task"
@@ -221,17 +310,24 @@
             </div>
 
             <div id="task-list" class="task-list"></div>
+
         </section>
 
     </div>
 
     <!-- ADD / EDIT TASK MODAL -->
     <div class="modal" id="task-modal">
+
         <div class="modal-content">
-            <button class="close-modal" id="close-modal">&times;</button>
+
+            <button class="close-modal" id="close-modal">
+                &times;
+            </button>
 
             <h2 id="modal-title">Add New Task</h2>
-            <p class="modal-subtitle">Fill in the details of your task.</p>
+            <p class="modal-subtitle">
+                Fill in the details of your task.
+            </p>
 
             <form id="task-form">
 
@@ -293,34 +389,61 @@
                 </button>
 
             </form>
+
         </div>
+
     </div>
 
     <!-- MY PROFILE MODAL -->
     <div class="profile-modal" id="profile-modal">
+
         <div class="profile-modal-content">
-            <button type="button" class="profile-modal-close" data-close-modal="profile-modal">&times;</button>
+
+            <button
+                type="button"
+                class="profile-modal-close"
+                data-close-modal="profile-modal"
+            >
+                &times;
+            </button>
 
             <h2>My Profile</h2>
-            <p class="profile-modal-subtitle">Your account information.</p>
+            <p class="profile-modal-subtitle">
+                Your account information.
+            </p>
 
             <div class="profile-detail">
                 <span>Account Email</span>
                 <strong id="modal-profile-email">Loading...</strong>
             </div>
 
-            <button type="button" class="profile-modal-button" data-close-modal="profile-modal">
+            <button
+                type="button"
+                class="profile-modal-button"
+                data-close-modal="profile-modal"
+            >
                 Close
             </button>
+
         </div>
+
     </div>
 
     <!-- ABOUT APP MODAL -->
     <div class="profile-modal" id="about-modal">
+
         <div class="profile-modal-content">
-            <button type="button" class="profile-modal-close" data-close-modal="about-modal">&times;</button>
+
+            <button
+                type="button"
+                class="profile-modal-close"
+                data-close-modal="about-modal"
+            >
+                &times;
+            </button>
 
             <h2>About Daily Planner</h2>
+
             <p class="profile-modal-subtitle">
                 Organize your day, one task at a time.
             </p>
@@ -333,10 +456,16 @@
 
             <p class="about-app-version">Version 1.0</p>
 
-            <button type="button" class="profile-modal-button" data-close-modal="about-modal">
+            <button
+                type="button"
+                class="profile-modal-button"
+                data-close-modal="about-modal"
+            >
                 Close
             </button>
+
         </div>
+
     </div>
 
     <!-- DAILY PLANNER JAVASCRIPT -->
