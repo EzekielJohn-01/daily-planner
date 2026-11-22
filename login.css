@@ -1,0 +1,487 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #6477A8;
+    --primary-dark: #4E608F;
+    --background: #E8EAF4;
+    --card: #E1E5F1;
+    --input: #F0F2F8;
+    --button: #8580A8;
+    --button-hover: #716B94;
+    --white: #FFFFFF;
+    --text: #252B3A;
+    --muted: #8991A5;
+    --border: #D1D8E8;
+    --red: #CF5555;
+}
+
+/* =========================
+   LOGIN PAGE
+========================= */
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(
+        135deg,
+        #F0F1F8 0%,
+        #E8EAF4 50%,
+        #E1E5F1 100%
+    );
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 430px;
+    animation: loginFade 0.6s ease;
+}
+
+.login-card {
+    background: var(--card);
+    padding: 42px 38px;
+    border-radius: 22px;
+    box-shadow: 0 15px 45px rgba(56, 72, 110, 0.12);
+    border: 1px solid #D5DAE9;
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.login-card:hover {
+    box-shadow: 0 18px 50px rgba(56, 72, 110, 0.16);
+}
+
+.login-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #D5DBEB;
+    border: 1px solid #C8D0E3;
+    border-radius: 21px;
+    font-size: 32px;
+    box-shadow: 0 5px 15px rgba(100, 119, 168, 0.08);
+}
+
+h1 {
+    color: var(--primary-dark);
+    font-size: 28px;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 35px;
+}
+
+h2 {
+    color: var(--text);
+    font-size: 23px;
+    margin-bottom: 9px;
+}
+
+.description {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 32px;
+    line-height: 1.5;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 21px;
+}
+
+.form-group label {
+    display: block;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--input);
+    transition: 0.25s ease;
+}
+
+.form-group input:hover {
+    border-color: #BCC6DC;
+}
+
+.form-group input:focus {
+    border-color: var(--primary);
+    background: var(--input);
+    box-shadow: 0 0 0 4px rgba(100, 119, 168, 0.12);
+}
+
+.form-group input::placeholder {
+    color: #AAB0BE;
+}
+
+/* PASSWORD EYE ICON */
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    padding-right: 48px !important;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 13px;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #8991A5;
+}
+
+.toggle-password svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.toggle-password:hover {
+    color: var(--primary-dark);
+}
+
+/* LOGIN BUTTON */
+
+#login-button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 9px;
+    background: var(--button);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s ease;
+    box-shadow: 0 5px 13px rgba(113, 107, 148, 0.18);
+}
+
+#login-button:hover {
+    background: var(--button-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(113, 107, 148, 0.23);
+}
+
+#login-button:active {
+    transform: translateY(0);
+}
+
+#login-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.message {
+    min-height: 18px;
+    margin: 5px 0;
+    color: var(--red);
+    font-size: 13px;
+    text-align: left;
+}
+
+.signup-text {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 28px;
+}
+
+.signup-text a {
+    color: var(--primary-dark);
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.signup-text a:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+@keyframes loginFade {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   SIGN UP PAGE
+========================= */
+
+.signup-page {
+    background: linear-gradient(
+        135deg,
+        #F0F1F8 0%,
+        #E8EAF4 50%,
+        #E1E5F1 100%
+    );
+    background-attachment: fixed;
+    padding: 35px 20px;
+}
+
+.signup-container {
+    width: 100%;
+    max-width: 465px;
+    margin: auto;
+}
+
+.signup-card {
+    background: var(--card);
+    padding: 38px 40px;
+    border-radius: 22px;
+    box-shadow: 0 15px 45px rgba(56, 72, 110, 0.10);
+    border: 1px solid #D5DAE9;
+}
+
+.signup-brand {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.signup-icon {
+    width: 62px;
+    height: 62px;
+    margin: 0 auto 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #D5DBEB;
+    border-radius: 18px;
+    font-size: 29px;
+}
+
+.signup-brand h1 {
+    font-size: 25px;
+    color: var(--primary-dark);
+    margin-bottom: 7px;
+}
+
+.signup-brand p {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.signup-heading {
+    margin-bottom: 25px;
+}
+
+.signup-label {
+    display: inline-block;
+    color: var(--primary-dark);
+    background: #D5DBEB;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1.2px;
+    margin-bottom: 12px;
+}
+
+.signup-heading h2 {
+    color: var(--text);
+    font-size: 27px;
+    margin-bottom: 8px;
+}
+
+.signup-heading p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.signup-card .form-group {
+    margin-bottom: 19px;
+}
+
+.signup-card .form-group label {
+    font-size: 13px;
+    margin-bottom: 9px;
+}
+
+.signup-card .form-group input {
+    padding: 15px;
+    border-radius: 10px;
+    background: var(--input);
+    font-size: 13px;
+}
+
+.signup-card .form-group input:hover {
+    border-color: #BCC6DC;
+}
+
+.signup-card .form-group small {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 7px;
+}
+
+/* SIGN UP BUTTON */
+
+.signup-card #signup-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    margin-top: 12px;
+    background: var(--button);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.25s ease;
+    box-shadow: 0 5px 13px rgba(113, 107, 148, 0.18);
+}
+
+.signup-card #signup-button span {
+    font-size: 19px;
+    transition: transform 0.25s ease;
+}
+
+.signup-card #signup-button:hover {
+    background: var(--button-hover);
+    box-shadow: 0 8px 18px rgba(113, 107, 148, 0.23);
+    transform: translateY(-2px);
+}
+
+.signup-card #signup-button:hover span {
+    transform: translateX(4px);
+}
+
+.signup-card #signup-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.signup-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-top: 27px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+}
+
+.signup-footer p {
+    color: var(--muted);
+}
+
+.signup-footer a {
+    color: var(--primary-dark);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.signup-footer a:hover {
+    text-decoration: underline;
+}
+
+.signup-note {
+    text-align: center;
+    color: #929BB0;
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-top: 20px;
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+
+@media (max-width: 480px) {
+    body {
+        padding: 18px;
+    }
+
+    .login-card {
+        padding: 34px 23px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    h2 {
+        font-size: 21px;
+    }
+
+    .signup-card {
+        padding: 30px 23px;
+    }
+
+    .signup-heading h2 {
+        font-size: 24px;
+    }
+}
+
+/* =========================
+   PAGE ALIGNMENT
+========================= */
+
+html,
+body {
+    min-height: 100%;
+}
+
+body:not(.signup-page) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
